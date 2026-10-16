@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pixel Turf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body { display: grid; place-items: center; min-height: 100%; overflow: hidden; }
+  #bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.55; }
+  main { position: relative; z-index: 1; text-align: center; padding: 24px; display: grid; gap: 36px; justify-items: center; }
+  .logo { font-size: clamp(44px, 12vw, 96px); }
+  .row { display: grid; gap: 22px; justify-items: center; width: min(360px, 90vw); }
+  .or { font-family: var(--pixel); font-size: 10px; color: var(--dim); }
+  #code { text-align: center; text-transform: uppercase; letter-spacing: 0.4em; font-family: var(--pixel); font-size: 22px; padding: 16px 8px 16px 20px; }
+  .panel { background: rgba(7, 10, 20, 0.82); padding: 26px; border: 2px solid var(--line); display: grid; gap: 22px; justify-items: center; width: min(380px, 92vw); }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<main>
+  <h1 class="logo">
+    <span style="color:#ff3b5c">T</span><span style="color:#ffd400">U</span><span style="color:#19e3ff">R</span><span style="color:#a6e22e">F</span>
+    <small>CLAIM THE MAP. ONE PIXEL AT A TIME.</small>
+  </h1>
+  <div class="panel">
+    <div class="row">
+      <input id="code" type="text" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <button id="join" class="btn">JOIN GAME</button>
+    </div>
+    <div class="or">- or -</div>
+    <a href="host.html" id="host" style="text-decoration:none"><button class="btn alt" type="button">HOST A GAME</button></a>
+  </div>
+</main>
+<script>
+  // decorative: random tiles slowly claiming the background
+  const cv = document.getElementById('bg'), c = cv.getContext('2d');
+  const cols = ['#ff3b5c', '#ff8a00', '#ffd400', '#a6e22e', '#00d68f', '#19e3ff', '#3d7bff', '#8b5cff', '#ff4fd8'];
+  const S = 28; let W, H, gw, gh;
+  function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; gw = Math.ceil(W / S); gh = Math.ceil(H / S); c.fillStyle = '#070a14'; c.fillRect(0, 0, W, H); }
+  size(); addEventListener('resize', size);
+  setInterval(() => {
+    for (let n = 0; n < 4; n++) {
+      const x = Math.floor(Math.random() * gw), y = Math.floor(Math.random() * gh);
+      c.fillStyle = Math.random() < 0.12 ? '#070a14' : cols[Math.floor(Math.random() * cols.length)];
+      c.globalAlpha = 0.55; c.fillRect(x * S, y * S, S - 2, S - 2); c.globalAlpha = 1;
+    }
+  }, 60);
+
+  const keep = new URLSearchParams(location.search).has('mock') ? '&mock=1' : '';
+  if (keep) document.getElementById('host').href = 'host.html?mock=1';
+  const code = document.getElementById('code');
+  const go = () => { const v = code.value.trim().toUpperCase(); if (v.length === 4) location.href = 'play.html?r=' + v + keep; else code.focus(); };
+  document.getElementById('join').onclick = go;
+  code.onkeydown = (e) => { if (e.key === 'Enter') go(); };
+</script>
+</body>
+</html>

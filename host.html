@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pixel Turf - Host</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="host.css">
+</head>
+<body data-phase="boot">
+<div id="app">
+  <main id="stage">
+    <canvas id="map"></canvas>
+
+    <section id="lobby">
+      <div class="qr-card"><canvas id="qr"></canvas></div>
+      <div class="join-info">
+        <div class="label">SCAN, OR GO TO</div>
+        <div id="joinurl"></div>
+        <div class="label">ROOM CODE</div>
+        <div id="roomcode">----</div>
+      </div>
+      <div id="chips"></div>
+    </section>
+
+    <div id="countdown"></div>
+    <section id="podium"></section>
+    <div id="fatal"></div>
+  </main>
+
+  <aside id="side">
+    <h1 class="logo">
+      <span style="color:#ff3b5c">T</span><span style="color:#ffd400">U</span><span style="color:#19e3ff">R</span><span style="color:#a6e22e">F</span>
+    </h1>
+    <div id="timer">--:--</div>
+
+    <div class="controls only-lobby">
+      <label>MAP SIZE<select id="size"><option value="40">Small (40x40)</option><option value="60" selected>Medium (60x60)</option><option value="80">Large (80x80)</option></select></label>
+      <label>LENGTH<select id="mins"><option value="2">2 min</option><option value="3" selected>3 min</option><option value="5">5 min</option><option value="10">10 min</option></select></label>
+      <button id="start" class="btn">START</button>
+      <div id="count-note"></div>
+    </div>
+    <div class="controls only-running">
+      <button id="end" class="btn ghost">END NOW</button>
+    </div>
+    <div class="controls only-ended">
+      <button id="rematch" class="btn">REMATCH</button>
+    </div>
+
+    <div id="board-head"><span>LEADERBOARD</span><span id="follow-note">click a name to spectate</span></div>
+    <div id="rows"></div>
+    <button id="close" class="btn ghost">CLOSE ROOM</button>
+  </aside>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script type="module" src="host.js"></script>
+</body>
+</html>

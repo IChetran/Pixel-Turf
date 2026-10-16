@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#070a14">
+<title>Pixel Turf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="play.css">
+</head>
+<body>
+<div id="boot">Connecting...</div>
+<div id="fatal" hidden></div>
+
+<section id="screen-code" class="screen" hidden>
+  <h1 class="logo"><span style="color:#ff3b5c">T</span><span style="color:#ffd400">U</span><span style="color:#19e3ff">R</span><span style="color:#a6e22e">F</span></h1>
+  <input id="code-in" type="text" maxlength="4" placeholder="ROOM CODE" autocapitalize="characters" autocomplete="off" spellcheck="false">
+  <button id="code-go" class="btn">GO</button>
+</section>
+
+<section id="screen-join" class="screen" hidden>
+  <h1 class="logo"><span style="color:#ff3b5c">T</span><span style="color:#ffd400">U</span><span style="color:#19e3ff">R</span><span style="color:#a6e22e">F</span></h1>
+  <div id="room-tag"></div>
+  <input id="name" type="text" maxlength="14" placeholder="Your name" autocomplete="off" spellcheck="false">
+  <div class="label">PICK YOUR COLOR</div>
+  <div id="swatches"></div>
+  <button id="join" class="btn">JOIN</button>
+  <div id="join-note"></div>
+</section>
+
+<section id="screen-wait" class="screen" hidden>
+  <div id="me-card"><span id="me-dot"></span><span id="me-name"></span></div>
+  <div class="label">YOU'RE IN. WAITING FOR THE HOST TO START</div>
+  <div id="wait-list"></div>
+  <div class="tip">Turn your phone sideways. Drag anywhere to move. Stop moving to claim the tile you're standing on.</div>
+</section>
+
+<section id="screen-game" hidden>
+  <canvas id="cv"></canvas>
+  <div id="touch"></div>
+  <div id="stick"><div id="knob"></div></div>
+  <div id="hud">
+    <div id="hud-time">0:00</div>
+    <div id="hud-rank"></div>
+    <div id="hud-tiles"></div>
+  </div>
+  <div id="minis"><canvas id="mini"></canvas><canvas id="mini2"></canvas></div>
+  <div id="big"></div>
+  <div id="hint">STAND STILL TO CLAIM</div>
+  <div id="results" hidden></div>
+</section>
+
+<div id="rotate"><div><div class="rot-icon">&#8635;</div>Rotate your phone</div></div>
+<div id="toast"></div>
+<script type="module" src="play.js"></script>
+</body>
+</html>

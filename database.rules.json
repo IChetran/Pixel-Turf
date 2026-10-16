@@ -1,0 +1,36 @@
+{
+  "rules": {
+    "rooms": {
+      "$room": {
+        ".read": "auth != null",
+        ".write": "auth != null && data.child('meta/hostUid').val() === auth.uid",
+
+        "meta": {
+          ".write": "auth != null && !data.exists()",
+          ".validate": "newData.hasChildren(['hostUid', 'state']) && newData.child('hostUid').val() === auth.uid"
+        },
+
+        "players": {
+          "$pid": {
+            ".write": "auth != null && root.child('rooms').child($room).child('meta').exists() && (!data.exists() || data.child('uid').val() === auth.uid)",
+            ".validate": "newData.hasChildren(['name', 'color', 'uid']) && newData.child('uid').val() === auth.uid && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 14 && newData.child('color').isString() && newData.child('color').val().matches(/^#[0-9a-fA-F]{6}$/)",
+            "name": { ".validate": true },
+            "color": { ".validate": true },
+            "uid": { ".validate": true },
+            "$other": { ".validate": false }
+          }
+        },
+
+        "input": {
+          "$pid": {
+            ".write": "auth != null && root.child('rooms').child($room).child('players').child($pid).child('uid').val() === auth.uid",
+            ".validate": "newData.hasChildren(['dx', 'dy']) && newData.child('dx').isNumber() && newData.child('dy').isNumber() && newData.child('dx').val() >= -1 && newData.child('dx').val() <= 1 && newData.child('dy').val() >= -1 && newData.child('dy').val() <= 1",
+            "dx": { ".validate": true },
+            "dy": { ".validate": true },
+            "$other": { ".validate": false }
+          }
+        }
+      }
+    }
+  }
+}
